@@ -2,12 +2,15 @@ package ec.edu.espe.marca.cliente.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import ec.edu.espe.marca.tarjeta.model.Tarjeta;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import ec.edu.espe.marca.tarjeta.model.Tarjeta;
 
 @Entity
 @Table(name = "CLIENTE")
@@ -29,7 +32,7 @@ public class Cliente implements Serializable {
     @Column(name = "CORREO", length = 100, nullable = true)
     private String correo;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Tarjeta> tarjetas;
 
     public Cliente() {
@@ -96,7 +99,10 @@ public class Cliente implements Serializable {
     }
 
     public List<Tarjeta> getTarjetas() {
-        return tarjetas;
+        // Filtrar tarjetas por codCliente
+            return tarjetas.stream()
+            .filter(tarjeta -> tarjeta.getCodCliente().equals(codCliente))
+            .collect(Collectors.toList());
     }
 
     public void setTarjetas(List<Tarjeta> tarjetas) {

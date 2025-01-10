@@ -1,14 +1,18 @@
 package ec.edu.espe.marca.bancos.model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ec.edu.espe.marca.liquidacion.model.Liquidacion;
+import ec.edu.espe.marca.tarjeta.model.Tarjeta;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
-import ec.edu.espe.marca.liquidacion.model.Liquidacion;
-import ec.edu.espe.marca.tarjeta.model.Tarjeta;
 
 @Entity
 @Table(name = "BANCO_EMISOR")
@@ -22,9 +26,12 @@ public class BancoEmisor implements Serializable {
     @Column(name = "PAIS", length = 3, nullable = false)
     private String pais;
 
-    @OneToMany(mappedBy = "bancoEmisor")
+    @OneToMany(mappedBy = "bancoEmisor", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Liquidacion> liquidaciones;
-    @OneToMany(mappedBy = "bancoEmisor")
+    
+    @OneToMany(mappedBy = "bancoEmisor", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Tarjeta> tarjetas;
 
     public BancoEmisor() {

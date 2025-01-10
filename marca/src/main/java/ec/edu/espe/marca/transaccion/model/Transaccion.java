@@ -1,17 +1,18 @@
 package ec.edu.espe.marca.transaccion.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import ec.edu.espe.marca.liquidacion.model.Liquidacion;
+import ec.edu.espe.marca.seguridad.model.SeguridadProcesador;
+import ec.edu.espe.marca.tarjeta.model.Tarjeta;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import ec.edu.espe.marca.tarjeta.model.Tarjeta;
-import ec.edu.espe.marca.liquidacion.model.Liquidacion;
-import ec.edu.espe.marca.seguridad.model.SeguridadProcesador;
 
 @Entity
 @Table(name = "TRANSACCION")
@@ -51,9 +52,11 @@ public class Transaccion implements Serializable {
     @ManyToOne
     @JoinColumn(name = "COD_TARJETA", referencedColumnName = "COD_TARJETA", insertable = false, updatable = false)
     private Tarjeta tarjeta;
+
     @ManyToOne
     @JoinColumn(name = "COD_LIQUIDACION", referencedColumnName = "COD_LIQUIDACION", insertable = false, updatable = false)
     private Liquidacion liquidacion;
+    
     @ManyToOne
     @JoinColumn(name = "COD_PROCESADOR", referencedColumnName = "COD_PROCESADOR", insertable = false, updatable = false)
     private SeguridadProcesador seguridadProcesador;

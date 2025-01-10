@@ -3,16 +3,17 @@ package ec.edu.espe.marca.tarjeta.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ec.edu.espe.marca.bancos.model.BancoEmisor;
+import ec.edu.espe.marca.cliente.model.Cliente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-//import jakarta.persistence.Temporal;
-//import jakarta.persistence.TemporalType;
-import ec.edu.espe.marca.bancos.model.BancoEmisor;
-import ec.edu.espe.marca.cliente.model.Cliente;
 
 @Entity
 @Table(name = "TARJETA")
@@ -26,7 +27,7 @@ public class Tarjeta implements Serializable {
     private Integer codCliente;
     @Column(name = "NUMERO_TARJETA", length = 16, nullable = false)
     private String numeroTarjeta;
-    @Column(name = "CVV", length = 4, nullable = true)
+    @Column(name = "CVV_", length = 4, nullable = true)
     private String cvv;
     //@Temporal(TemporalType.DATE)
     @Column(name = "FECHA_EXPIRACION", nullable = false)
@@ -34,11 +35,13 @@ public class Tarjeta implements Serializable {
     @Column(name = "TIPO_TARJETA", length = 3, nullable = false)
     private String tipoTarjeta;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "COD_BANCO_EMISOR", referencedColumnName = "COD_BANCO_EMISOR", insertable = false, updatable = false)
     private BancoEmisor bancoEmisor;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "COD_CLIENTE", referencedColumnName = "COD_CLIENTE", insertable = false, updatable = false)
+    @JsonIgnore
     private Cliente cliente;
 
     public Tarjeta() {

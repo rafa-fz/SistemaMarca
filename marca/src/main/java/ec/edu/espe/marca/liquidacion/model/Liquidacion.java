@@ -1,19 +1,18 @@
 package ec.edu.espe.marca.liquidacion.model;
 
 import java.io.Serializable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-//import jakarta.persistence.Temporal;
-//import jakarta.persistence.TemporalType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import ec.edu.espe.marca.bancos.model.BancoAdquiriente;
 import ec.edu.espe.marca.bancos.model.BancoEmisor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "LIQUIDACION")
@@ -33,10 +32,11 @@ public class Liquidacion implements Serializable {
     @Column(name = "TARIFAS", precision = 18, scale = 2, nullable = false)
     private BigDecimal tarifas;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "COD_BANCO_ADQUIRENTE", referencedColumnName = "COD_BANCO_ADQUIRENTE", insertable = false, updatable = false)
     private BancoAdquiriente bancoAdquiriente;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "COD_BANCO_EMISOR", referencedColumnName = "COD_BANCO_EMISOR", insertable = false, updatable = false)
     private BancoEmisor bancoEmisor;
 

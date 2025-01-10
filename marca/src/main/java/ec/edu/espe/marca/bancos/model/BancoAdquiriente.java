@@ -1,27 +1,34 @@
 package ec.edu.espe.marca.bancos.model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ec.edu.espe.marca.liquidacion.model.Liquidacion;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
-import ec.edu.espe.marca.liquidacion.model.Liquidacion;
 
 @Entity
-@Table(name = "BANCO_ADQUIRIENTE")
+@Table(name = "BANCO_ADQUIRENTE")
 public class BancoAdquiriente implements Serializable {
 
     @Id
     @Column(name = "COD_BANCO_ADQUIRENTE", length = 10, nullable = false)
     private Integer codBancoAdquiriente;
+    @Column(name = "CODIGO_BIC", length = 50, nullable = false)
+    private String codigoBic;
     @Column(name = "NOMBRE", length = 50, nullable = false)
     private String nombre;
     @Column(name = "PAIS", length = 3, nullable = false)
     private String pais;
 
-    @OneToMany(mappedBy = "bancoAdquiriente")
+    @OneToMany(mappedBy = "bancoAdquiriente", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Liquidacion> liquidaciones;
 
     public BancoAdquiriente() {
@@ -37,6 +44,14 @@ public class BancoAdquiriente implements Serializable {
 
     public void setCodBancoAdquiriente(Integer codBancoAdquiriente) {
         this.codBancoAdquiriente = codBancoAdquiriente;
+    }
+
+    public String getCodigoBic() {
+        return codigoBic;
+    }
+
+    public void setCodigoBic(String codigoBic) {
+        this.codigoBic = codigoBic;
     }
 
     public String getNombre() {
@@ -90,7 +105,7 @@ public class BancoAdquiriente implements Serializable {
 
     @Override
     public String toString() {
-        return "BancoAdquiriente [codBancoAdquiriente=" + codBancoAdquiriente + ", nombre=" + nombre + ", pais=" + pais
+        return "BancoAdquiriente [codBancoAdquiriente=" + codBancoAdquiriente + ", codigoBic=" + codigoBic + ", nombre=" + nombre + ", pais=" + pais
                 + ", liquidaciones=" + liquidaciones + "]";
     }
 

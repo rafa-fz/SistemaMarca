@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -91,5 +92,14 @@ public class TransaccionController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(transaccionesDTO);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Transaccion> obtenerTransaccion(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(this.transaccionService.ObtenerTransaccionporCodigo(id));
+        } catch (RuntimeException rte) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
