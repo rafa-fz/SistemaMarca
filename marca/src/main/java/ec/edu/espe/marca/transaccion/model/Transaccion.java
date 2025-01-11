@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ec.edu.espe.marca.liquidacion.model.Liquidacion;
 import ec.edu.espe.marca.seguridad.model.SeguridadProcesador;
 import ec.edu.espe.marca.tarjeta.model.Tarjeta;
@@ -59,6 +61,7 @@ public class Transaccion implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "COD_PROCESADOR", referencedColumnName = "COD_PROCESADOR", insertable = false, updatable = false)
+    @JsonIgnore
     private SeguridadProcesador seguridadProcesador;
 
     public Transaccion() {
