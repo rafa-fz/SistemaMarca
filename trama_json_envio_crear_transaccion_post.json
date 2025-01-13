@@ -1,0 +1,14 @@
+{
+	"codProcesador": 1,
+	"monto": 100.5,
+	"tipoTransaccion": "COMPRA",
+	"moneda": "USD",
+	"paisOrigen": "ECU",
+	"canal": "WEB",
+	"tarjeta": {
+		"numeroTarjeta": "1234567812345678",
+		"cvv": "123",
+		"fechaExpiracion": "12/25",
+		"tipoTarjeta": "CRE"
+	}
+}
