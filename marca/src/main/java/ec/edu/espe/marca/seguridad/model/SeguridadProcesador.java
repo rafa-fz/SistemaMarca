@@ -1,16 +1,15 @@
 package ec.edu.espe.marca.seguridad.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+
+import ec.edu.espe.marca.transaccion.model.Transaccion;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-//import jakarta.persistence.Temporal;
-//import jakarta.persistence.TemporalType;
-import java.util.Date;
-import java.util.List;
-import ec.edu.espe.marca.transaccion.model.Transaccion;
 
 @Entity
 @Table(name = "SEGURIDAD_PROCESADOR")
@@ -23,10 +22,10 @@ public class SeguridadProcesador implements Serializable {
     private String clave;
     //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FECHA_ACTUALIZACION", nullable = false)
-    private Date fechaActualizacion;
+    private LocalDate fechaActualizacion;
     //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FECHA_ACTIVACION", nullable = false)
-    private Date fechaActivacion;
+    private LocalDate fechaActivacion;
     @Column(name = "ESTADO", length = 3, nullable = false)
     private String estado;
 
@@ -56,19 +55,19 @@ public class SeguridadProcesador implements Serializable {
         this.clave = clave;
     }
 
-    public Date getFechaActualizacion() {
+    public LocalDate getFechaActualizacion() {
         return fechaActualizacion;
     }
 
-    public void setFechaActualizacion(Date fechaActualizacion) {
+    public void setFechaActualizacion(LocalDate fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
 
-    public Date getFechaActivacion() {
+    public LocalDate getFechaActivacion() {
         return fechaActivacion;
     }
 
-    public void setFechaActivacion(Date fechaActivacion) {
+    public void setFechaActivacion(LocalDate fechaActivacion) {
         this.fechaActivacion = fechaActivacion;
     }
 

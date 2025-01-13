@@ -2,10 +2,11 @@ package ec.edu.espe.marca.transaccion.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import ec.edu.espe.marca.comision.model.Comision;
 import ec.edu.espe.marca.liquidacion.model.Liquidacion;
 import ec.edu.espe.marca.seguridad.model.SeguridadProcesador;
 import ec.edu.espe.marca.tarjeta.model.Tarjeta;
@@ -20,34 +21,51 @@ import jakarta.persistence.Table;
 @Table(name = "TRANSACCION")
 public class Transaccion implements Serializable {
     @Id
-    @Column(name = "COD_TRANSACCION", length = 10, nullable = false)
+    @Column(name = "COD_TRANSACCION", nullable = false)
     private Integer codTransaccion;
-    @Column(name = "COD_TARJETA", length = 10, nullable = false)
+
+    @Column(name = "COD_TARJETA", nullable = false)
     private Integer codTarjeta;
-    @Column(name = "COD_LIQUIDACION", length = 10, nullable = false)
+
+    @Column(name = "COD_LIQUIDACION", nullable = false)
     private Integer codLiquidacion;
-    @Column(name = "COD_PROCESADOR", length = 10, nullable = false)
+
+    @Column(name = "COD_PROCESADOR", nullable = false)
     private Integer codProcesador;
-    @Column(name = "FECHA_TRANSACCION", nullable = false)
-    private LocalDate fechaTransaccion;
+
+    @Column(name = "COD_COMISION", nullable = false)
+    private Integer codComision;
+
+    @Column(name = "FECHA_TRANSACCION")
+    private LocalDateTime fechaTransaccion;
+
     @Column(name = "MONTO", precision = 18, scale = 2, nullable = false)
     private BigDecimal monto;
+
     @Column(name = "ESTADO_", length = 3, nullable = false)
     private String estado;
+
     @Column(name = "INTENTOS_VALIDACION", nullable = true)
     private Integer intentosValidacion;
+
     @Column(name = "CODIGO_AUTORIZACION", length = 10, nullable = false)
     private String codigoAutorizacion;
+
     @Column(name = "TIPO_TRANSACCION", length = 20, nullable = false)
     private String tipoTransaccion;
+
     @Column(name = "MONEDA", length = 3, nullable = false)
     private String moneda;
+
     @Column(name = "PAIS_ORIGEN", length = 3, nullable = false)
     private String paisOrigen;
-    @Column(name = "CODIGO_RESPUESTA", length = 3, nullable = false)
+
+    @Column(name = "CODIGO_RESPUESTA", length = 50, nullable = false)
     private String codigoRespuesta;
+
     @Column(name = "COMISION_MARCA", precision = 18, scale = 2, nullable = true)
     private BigDecimal comisionMarca;
+    
     @Column(name = "CANAL", length = 20, nullable = false)
     private String canal;
 
@@ -63,6 +81,10 @@ public class Transaccion implements Serializable {
     @JoinColumn(name = "COD_PROCESADOR", referencedColumnName = "COD_PROCESADOR", insertable = false, updatable = false)
     @JsonIgnore
     private SeguridadProcesador seguridadProcesador;
+
+    @ManyToOne
+    @JoinColumn(name = "COD_COMISION", referencedColumnName = "COD_COMISION", insertable = false, updatable = false)
+    private Comision comision;
 
     public Transaccion() {
     }
@@ -103,11 +125,11 @@ public class Transaccion implements Serializable {
         this.codProcesador = codProcesador;
     }
 
-    public LocalDate getFechaTransaccion() {
+    public LocalDateTime getFechaTransaccion() {
         return fechaTransaccion;
     }
 
-    public void setFechaTransaccion(LocalDate fechaTransaccion) {
+    public void setFechaTransaccion(LocalDateTime fechaTransaccion) {
         this.fechaTransaccion = fechaTransaccion;
     }
 
@@ -249,6 +271,22 @@ public class Transaccion implements Serializable {
                 + moneda + ", paisOrigen=" + paisOrigen + ", codigoRespuesta=" + codigoRespuesta + ", comisionMarca="
                 + comisionMarca + ", canal=" + canal + ", tarjeta=" + tarjeta + ", liquidacion=" + liquidacion
                 + ", seguridadProcesador=" + seguridadProcesador + "]";
+    }
+
+    public Integer getCodComision() {
+        return codComision;
+    }
+
+    public void setCodComision(Integer codComision) {
+        this.codComision = codComision;
+    }
+
+    public Comision getComision() {
+        return comision;
+    }
+
+    public void setComision(Comision comision) {
+        this.comision = comision;
     }
 
 }

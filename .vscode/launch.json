@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MarcaApplication",
+            "request": "launch",
+            "mainClass": "ec.edu.espe.marca.MarcaApplication",
+            "projectName": "marca"
+        },
+        {
+            "name": "Remote Attach",
+            "type": "java",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 5005
+        }
+    ]
+  }
+  

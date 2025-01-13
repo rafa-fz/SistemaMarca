@@ -1,9 +1,9 @@
 package ec.edu.espe.marca.cliente.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import ec.edu.espe.marca.cliente.model.Cliente;
 import ec.edu.espe.marca.cliente.repository.ClienteRepository;

@@ -20,7 +20,7 @@ public class BancoAdquiriente implements Serializable {
     @Id
     @Column(name = "COD_BANCO_ADQUIRENTE", length = 10, nullable = false)
     private Integer codBancoAdquiriente;
-    @Column(name = "CODIGO_BIC", length = 50, nullable = false)
+    @Column(name = "CODIGO_BIC", length = 11, nullable = false)
     private String codigoBic;
     @Column(name = "NOMBRE", length = 50, nullable = false)
     private String nombre;
