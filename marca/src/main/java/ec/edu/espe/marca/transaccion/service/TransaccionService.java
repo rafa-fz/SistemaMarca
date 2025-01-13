@@ -1,8 +1,11 @@
 package ec.edu.espe.marca.transaccion.service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,16 @@ public class TransaccionService {
         "INACTIVA",
         "OTRO"
     };
+
+    private static final Set<String> TIPOS_TTRANSACCION = new HashSet<>(Arrays.asList(
+        "CREDITO",
+        "CRE",
+        "DEBITO",
+        "DEB",
+        "RETIRO",
+        "RET",
+        "COMPRA"
+    ));
 
     private static final String CODIGO_RESPUESTA_OK = "OK";
     private static final String ESTADO_APR = "APR";
@@ -66,6 +79,11 @@ public class TransaccionService {
     }
     
     public Transaccion crearTransaccion(Transaccion transaccion) {
+        // VALIDAR EL TIPO DE TRANSACCIÓN A REALIZAR > EN LA MARCA
+        if (!TIPOS_TTRANSACCION.contains(transaccion.getTipoTransaccion().toUpperCase())) {
+            throw new RuntimeException("El tipo de transacción no es válido");
+        }
+
         int siguienteId = transaccionRepository.obtenerSiguienteId();
         transaccion.setCodTransaccion(siguienteId);
 
@@ -79,15 +97,13 @@ public class TransaccionService {
         this.tarjetaService.validarTarjeta(transaccion.getTarjeta(), tarjetaConsultadaBD);
 
         // REGISTRAR COMISION > EN LA MARCA
-        // añadir logica de calculo de comision después de tener la tabla en la bd
+        // logica para el cálculo de la comision de la transacción
         transaccion = this.comisionService.calcularComisionTransaccionTarjeta(transaccion);
-        //Transaccion transaccionConComision = this.comisionService.calcularComisionTransaccionTarjeta(transaccion);
-        //transaccion.setComisionMarca(transaccionConComision.getComisionMarca());
-        //transaccion.setComision(transaccionConComision.getComision());
 
         // SOLICITAR APROBACIÓN DE LA TRANSACCIÓN > DE LA MARCA AL BANCO EMISOR 
+        // PENDIENTE - Simulación de la petición de aprobación al banco emisor 
         Transaccion transaccionDevueltaPorBancoEmisor = new Transaccion(); 
-        // SE AÑADE logica de aprobación después de simular la petición al banco emisor
+        // INICIO - SE simula la respuesta del banco emisor con un código de respuesta aleatorio - INICIO
         transaccionDevueltaPorBancoEmisor.setCodigoAutorizacion(AUTORIZACION + (new Random()).nextInt(999) );
         transaccionDevueltaPorBancoEmisor.setCodigoRespuesta(generarCodigosDeRespuestaALeatorio());
         transaccionDevueltaPorBancoEmisor.setEstado(ESTADO_APR);
@@ -96,6 +112,7 @@ public class TransaccionService {
         transaccion.setCodigoRespuesta(transaccionDevueltaPorBancoEmisor.getCodigoRespuesta());
         transaccion.setCodigoAutorizacion(transaccionDevueltaPorBancoEmisor.getCodigoAutorizacion());
         transaccion.setEstado(transaccionDevueltaPorBancoEmisor.getCodigoRespuesta().equals(CODIGO_RESPUESTA_OK) ? ESTADO_APR : ESTADO_REC);
+        // FIN - SE simula la respuesta del banco emisor con un código de respuesta aleatorio - FIN
 
         // ASIGNAR DATOS POR DEFECTO > EN LA MARCA
         transaccion.setFechaTransaccion(LocalDateTime.now());

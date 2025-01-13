@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ec.edu.espe.marca.liquidacion.model.Liquidacion;
 import ec.edu.espe.marca.transaccion.model.Transaccion;
 import jakarta.persistence.CascadeType;
@@ -57,9 +59,11 @@ public class Comision implements Serializable {
     private String descripcion;
 
     @OneToMany(mappedBy = "comision", cascade = CascadeType.ALL) // , fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Transaccion> transacciones;
 
     @OneToMany(mappedBy = "comision", cascade = CascadeType.ALL) // , fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Liquidacion> liquidaciones;
 
     // Getters y Setters

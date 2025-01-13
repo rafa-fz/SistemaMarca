@@ -49,7 +49,7 @@ public class ComisionService {
     
     private Comision obtenerComisionTransaccionTarjeta(Transaccion transaccion) {
         String marcaTarjetaRecibida = obtenerMarca(transaccion.getTarjeta().getNumeroTarjeta());
-        String tipoTarjeta = transaccion.getTarjeta().getTipoTarjeta().equals(CREDITO_LABEL_TARJETA) ? CREDITO_LABEL_COMISION : DEBITO_LABEL_COMISION;
+        String tipoTarjeta = transaccion.getTarjeta().getTipoTarjeta().toUpperCase().startsWith(CREDITO_LABEL_TARJETA) ? CREDITO_LABEL_COMISION : DEBITO_LABEL_COMISION;
         String pais = transaccion.getPaisOrigen();
 
         Comision comisionEcontradaAAplicar = this.comisionRepository.obtenerComision(marcaTarjetaRecibida, tipoTarjeta, pais);

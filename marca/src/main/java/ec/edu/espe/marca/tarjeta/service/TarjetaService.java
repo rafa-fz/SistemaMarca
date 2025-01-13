@@ -2,7 +2,10 @@ package ec.edu.espe.marca.tarjeta.service;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,12 @@ import ec.edu.espe.marca.tarjeta.repository.TarjetaRepository;
 public class TarjetaService {
 
     private final TarjetaRepository tarjetaRepository;
+    private static final Set<String> TIPOS_TARJETA_SET = new HashSet<>(Arrays.asList(
+        "CREDITO",
+        "CRE",
+        "DEBITO",
+        "DEB"
+    ));
 
     public TarjetaService(TarjetaRepository tarjetaRepository) {
         this.tarjetaRepository = tarjetaRepository;
@@ -57,6 +66,12 @@ public class TarjetaService {
         if (tarjetaAValidar.getCvvTarjeta().length() != 3) {
             throw new RuntimeException("El cvv debe tener 3 dígitos");
         }
+        if (tarjetaAValidar.getNombreEnTarjeta().length() < 5) {
+            throw new RuntimeException("El nombre en la tarjeta debe tener al menos 5 caracteres");
+        }
+        if (!TIPOS_TARJETA_SET.contains(tarjetaAValidar.getTipoTarjeta().toUpperCase())) {
+            throw new RuntimeException("El tipo de tarjeta no es válido");
+        }
         YearMonth mesAnioExpiracion = YearMonth.parse(tarjetaAValidar.getFechaDeExpiracion(), DateTimeFormatter.ofPattern("MM/yy"));
         if (mesAnioExpiracion.isBefore(YearMonth.now())) {
             throw new RuntimeException("La fecha ingresada es incorrecta");
@@ -72,12 +87,12 @@ public class TarjetaService {
             throw new RuntimeException("El cvv no coincide");
         }
         if (!tarjetaAValidar.getNombreEnTarjeta().equals(tarjetaConsultadaBD.getNombreEnTarjeta())) {
-            throw new RuntimeException("El nombre no coincide");
+            throw new RuntimeException("El nombre de la tarjeta no coincide");
         }
         YearMonth mesAnioExpiracion = YearMonth.parse(tarjetaAValidar.getFechaDeExpiracion(), DateTimeFormatter.ofPattern("MM/yy"));
         tarjetaAValidar.setFechaExpiracion(mesAnioExpiracion.atDay(1));
         if (!tarjetaAValidar.getFechaExpiracion().equals(tarjetaConsultadaBD.getFechaExpiracion().withDayOfMonth(1))) {
-            throw new RuntimeException("La fecha de expiración no coincide");
+            throw new RuntimeException("La fecha de expiración de la tarjeta no coincide");
         }
     }
 }
