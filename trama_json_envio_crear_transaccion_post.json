@@ -1,14 +1,15 @@
 {
 	"codProcesador": 1,
-	"monto": 100.5,
+	"monto": {{$randomInt}}.{{$randomInt}},
 	"tipoTransaccion": "COMPRA",
 	"moneda": "USD",
 	"paisOrigen": "ECU",
 	"canal": "WEB",
 	"tarjeta": {
-		"numeroTarjeta": "1234567812345678",
-		"cvv": "123",
-		"fechaExpiracion": "12/25",
+		"numeroTarjeta": "4548209353078965",
+		"cvvTarjeta": "491",
+		"nombreEnTarjeta": "ANA MARIA GOMEZ D",
+		"fechaExpiracion": "05/28",
 		"tipoTarjeta": "CRE"
 	}
 }
