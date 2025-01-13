@@ -54,7 +54,7 @@ public class TarjetaService {
         if (tarjetaAValidar.getNumeroTarjeta().length() != 16) {
             throw new RuntimeException("El número de tarjeta debe tener 16 dígitos");
         }
-        if (tarjetaAValidar.getCvv().length() != 3) {
+        if (tarjetaAValidar.getCvvTarjeta().length() != 3) {
             throw new RuntimeException("El cvv debe tener 3 dígitos");
         }
         YearMonth mesAnioExpiracion = YearMonth.parse(tarjetaAValidar.getFechaDeExpiracion(), DateTimeFormatter.ofPattern("MM/yy"));
@@ -68,8 +68,11 @@ public class TarjetaService {
         if (!tarjetaAValidar.getNumeroTarjeta().equals(tarjetaConsultadaBD.getNumeroTarjeta())) {
             throw new RuntimeException("El número de tarjeta no coincide");
         }
-        if (!tarjetaAValidar.getCvv().equals(tarjetaConsultadaBD.getCvv())) {
+        if (!tarjetaAValidar.getCvvTarjeta().equals(tarjetaConsultadaBD.getCvvTarjeta())) {
             throw new RuntimeException("El cvv no coincide");
+        }
+        if (!tarjetaAValidar.getNombreEnTarjeta().equals(tarjetaConsultadaBD.getNombreEnTarjeta())) {
+            throw new RuntimeException("El nombre no coincide");
         }
         YearMonth mesAnioExpiracion = YearMonth.parse(tarjetaAValidar.getFechaDeExpiracion(), DateTimeFormatter.ofPattern("MM/yy"));
         tarjetaAValidar.setFechaExpiracion(mesAnioExpiracion.atDay(1));

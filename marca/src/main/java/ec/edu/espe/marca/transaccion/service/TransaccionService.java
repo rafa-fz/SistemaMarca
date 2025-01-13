@@ -1,6 +1,5 @@
 package ec.edu.espe.marca.transaccion.service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +7,7 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 
 import ec.edu.espe.marca.cliente.service.ClienteService;
+import ec.edu.espe.marca.comision.service.ComisionService;
 import ec.edu.espe.marca.tarjeta.model.Tarjeta;
 import ec.edu.espe.marca.tarjeta.service.TarjetaService;
 import ec.edu.espe.marca.transaccion.model.Transaccion;
@@ -18,11 +18,11 @@ public class TransaccionService {
 
     private final TransaccionRepository transaccionRepository;
     private final TarjetaService tarjetaService;
-    private final ClienteService clienteService;
+    private final ComisionService comisionService;
 
     // Lista de valores posibles solo para simulación de CODIGO_RESPUESTA del banco emisor
     private static final String[] STATUS = {
-        "OK",
+        "OK", "OK", "OK", "OK", "OK","OK", "OK", "OK", "OK", "OK","OK", "OK", "OK", "OK", "OK",
         "SOBREGIRADA",
         "ANULADA",
         "FONDOS INSUFICIENTES",
@@ -39,10 +39,10 @@ public class TransaccionService {
     private static final String AUTORIZACION = "AUTH";
 
 
-    public TransaccionService(TransaccionRepository transaccionRepository, TarjetaService tarjetaService, ClienteService clienteService) {
+    public TransaccionService(TransaccionRepository transaccionRepository, TarjetaService tarjetaService, ClienteService clienteService, ComisionService comisionService) {
         this.transaccionRepository = transaccionRepository;
         this.tarjetaService = tarjetaService;
-        this.clienteService = clienteService;
+        this.comisionService = comisionService;
     }
 
     public List<Transaccion> obtenerTodasTransacciones() {
@@ -79,8 +79,11 @@ public class TransaccionService {
         this.tarjetaService.validarTarjeta(transaccion.getTarjeta(), tarjetaConsultadaBD);
 
         // REGISTRAR COMISION > EN LA MARCA
-        BigDecimal comisionMarca = new BigDecimal((new Random()).nextInt(99)); //añadir logica de calculo de comision después de tener la tabla en la bd
-        transaccion.setComisionMarca(comisionMarca);
+        // añadir logica de calculo de comision después de tener la tabla en la bd
+        transaccion = this.comisionService.calcularComisionTransaccionTarjeta(transaccion);
+        //Transaccion transaccionConComision = this.comisionService.calcularComisionTransaccionTarjeta(transaccion);
+        //transaccion.setComisionMarca(transaccionConComision.getComisionMarca());
+        //transaccion.setComision(transaccionConComision.getComision());
 
         // SOLICITAR APROBACIÓN DE LA TRANSACCIÓN > DE LA MARCA AL BANCO EMISOR 
         Transaccion transaccionDevueltaPorBancoEmisor = new Transaccion(); 

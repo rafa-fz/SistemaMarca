@@ -1,19 +1,18 @@
 package ec.edu.espe.marca.comision.model;
 
 import java.io.Serializable;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 import ec.edu.espe.marca.liquidacion.model.Liquidacion;
 import ec.edu.espe.marca.transaccion.model.Transaccion;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "COMISION")
@@ -26,7 +25,8 @@ public class Comision implements Serializable {
     @Column(name = "MARCA", nullable = false, length = 20)
     private String marca;
 
-    @Column(name = "PREFIJO_MARCA", nullable = false, length = 5)
+    //CÓDIGO BIN DE LA TARJETA (6 DÍGITOS)
+    @Column(name = "PREFIJO_MARCA", nullable = false, length = 6)
     private String prefijoMarca;
 
     @Column(name = "TIPO", nullable = false, length = 15)

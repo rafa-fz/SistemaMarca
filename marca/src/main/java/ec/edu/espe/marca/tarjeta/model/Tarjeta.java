@@ -32,8 +32,14 @@ public class Tarjeta implements Serializable {
     @Column(name = "NUMERO_TARJETA", length = 16, nullable = false)
     private String numeroTarjeta;
 
-    @Column(name = "CVV_", length = 4, nullable = true)
-    private String cvv;
+    @Column(name = "NOMBRE_EN_TARJETA", length = 50, nullable = false)
+    private String nombreEnTarjeta;
+
+    @Column(name = "CVV_TARJETA", length = 4, nullable = true)
+    private String cvvTarjeta;
+
+    @Column(name = "PAIS_TARJETA", length = 3, nullable = true)
+    private String paisTarjeta;
 
     // Campo mapeado a la base de datos
     //@Temporal(TemporalType.DATE)
@@ -103,12 +109,12 @@ public class Tarjeta implements Serializable {
         this.numeroTarjeta = numeroTarjeta;
     }
 
-    public String getCvv() {
-        return cvv;
+    public String getCvvTarjeta() {
+        return cvvTarjeta;
     }
 
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
+    public void setCvvTarjeta(String cvv) {
+        this.cvvTarjeta = cvv;
     }
 
     public LocalDate getFechaExpiracion() {
@@ -171,7 +177,7 @@ public class Tarjeta implements Serializable {
     @Override
     public String toString() {
         return "Tarjeta [codTarjeta=" + codTarjeta + ", codBancoEmisor=" + codBancoEmisor + ", codCliente=" + codCliente
-                + ", numeroTarjeta=" + numeroTarjeta + ", cvv=" + cvv + ", fechaExpiracion=" + fechaDeExpiracion
+                + ", numeroTarjeta=" + numeroTarjeta + ", cvv=" + cvvTarjeta + ", fechaExpiracion=" + fechaDeExpiracion
                 + ", tipoTarjeta=" + tipoTarjeta + ", bancoEmisor=" + bancoEmisor + ", cliente=" + cliente + "]";
     }
 
@@ -189,6 +195,22 @@ public class Tarjeta implements Serializable {
 
     public void setEstadoTarjeta(String estadoTarjeta) {
         this.estadoTarjeta = estadoTarjeta;
+    }
+
+    public String getPaisTarjeta() {
+        return paisTarjeta;
+    }
+
+    public void setPaisTarjeta(String paisTarjeta) {
+        this.paisTarjeta = paisTarjeta;
+    }
+
+    public String getNombreEnTarjeta() {
+        return nombreEnTarjeta;
+    }
+
+    public void setNombreEnTarjeta(String nombreEnTarjeta) {
+        this.nombreEnTarjeta = nombreEnTarjeta;
     }
 
 }

@@ -3,13 +3,14 @@ package ec.edu.espe.marca.liquidacion.service;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
 import ec.edu.espe.marca.liquidacion.model.Liquidacion;
 import ec.edu.espe.marca.liquidacion.repository.LiquidacionRepository;
 
 @Service
 public class LiquidacionService {
 
-    private LiquidacionRepository liquidacionRepository;
+    private final LiquidacionRepository liquidacionRepository;
 
     public LiquidacionService(LiquidacionRepository liquidacionRepository) {
         this.liquidacionRepository = liquidacionRepository;
