@@ -81,7 +81,7 @@ public class TransaccionService {
     public Transaccion crearTransaccion(Transaccion transaccion) {
         // VALIDAR EL TIPO DE TRANSACCIÓN A REALIZAR > EN LA MARCA
         if (!TIPOS_TTRANSACCION.contains(transaccion.getTipoTransaccion().toUpperCase())) {
-            throw new RuntimeException("El tipo de transacción no es válido");
+            throw new RuntimeException("El tipo de transacción no es válido!!!!");
         }
 
         int siguienteId = transaccionRepository.obtenerSiguienteId();

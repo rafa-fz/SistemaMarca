@@ -22,16 +22,18 @@ class TransaccionDTO {
     private String fechaTransaccion;
     private BigDecimal monto;
     private String estado;
+    private String codigoRespuesta;
     private String codigoAutorizacion;
     private String paisOrigen;
     private BigDecimal comisionMarca;
 
-    public TransaccionDTO(Integer codTransaccion, String fechaTransaccion, BigDecimal monto, String estado,
+    public TransaccionDTO(Integer codTransaccion, String fechaTransaccion, BigDecimal monto, String estado, String codigoRespuesta,
                           String codigoAutorizacion, String paisOrigen, BigDecimal comisionMarca) {
         this.codTransaccion = codTransaccion;
         this.fechaTransaccion = fechaTransaccion;
         this.monto = monto;
         this.estado = estado;
+        this.codigoRespuesta = codigoRespuesta;
         this.codigoAutorizacion = codigoAutorizacion;
         this.paisOrigen = paisOrigen;
         this.comisionMarca = comisionMarca;
@@ -65,6 +67,14 @@ class TransaccionDTO {
     public BigDecimal getComisionMarca() {
         return comisionMarca;
     }
+
+    public String getCodigoRespuesta() {
+        return codigoRespuesta;
+    }
+
+    public void setCodigoRespuesta(String codigoRespuesta) {
+        this.codigoRespuesta = codigoRespuesta;
+    }
 }
 
 @RestController
@@ -88,10 +98,12 @@ public class TransaccionController {
                         transaccion.getFechaTransaccion().toString(),
                         transaccion.getMonto(),
                         transaccion.getEstado(),
+                        transaccion.getCodigoRespuesta(),
                         transaccion.getCodigoAutorizacion(),
                         transaccion.getPaisOrigen(),
                         transaccion.getComisionMarca()
                 ))
+                .sorted((dto1, dto2) -> dto2.getCodTransaccion().compareTo(dto1.getCodTransaccion()))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(transaccionesDTO);

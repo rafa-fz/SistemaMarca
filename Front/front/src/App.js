@@ -13,8 +13,10 @@ function App() {
             .then(response => {
                 const datosFiltrados = response.data.map(item => ({
                     fechaTransaccion: item.fechaTransaccion,
+                    codTransaccion: item.codTransaccion,
                     monto: item.monto,
                     estado: item.estado,
+                    codigoRespuesta: item.codigoRespuesta,
                     codigoAutorizacion: item.codigoAutorizacion,
                     paisOrigen: item.paisOrigen,
                     comisionMarca: item.comisionMarca
@@ -34,6 +36,12 @@ function App() {
         <div className="container">
             <h1 className="title">Reporte</h1>
             
+            {/* Mostrar el número total de transacciones */}
+            {!loading && !error && (
+                <p className="total-transactions">
+                    Total de transacciones: {transacciones.length}
+                </p>
+            )}
             {/* Manejo del estado de carga y errores */}
             {loading ? (
                 <p className="loading">Cargando transacciones...</p>
@@ -44,10 +52,11 @@ function App() {
                     {transacciones.length > 0 ? (
                         transacciones.map((transaccion, index) => (
                             <div key={index} className="transaction-report">
-                                <h2>Transacción #{index + 1}</h2>
+                                <h2>Transacción #{transaccion.codTransaccion}</h2>
                                 <p><strong>Fecha:</strong> {transaccion.fechaTransaccion}</p>
                                 <p><strong>Monto:</strong> ${transaccion.monto.toFixed(2)}</p>
                                 <p><strong>Estado:</strong> {transaccion.estado}</p>
+                                <p><strong>Motivo:</strong> {transaccion.codigoRespuesta}</p>
                                 <p><strong>Código de Autorización:</strong> {transaccion.codigoAutorizacion}</p>
                                 <p><strong>País de Origen:</strong> {transaccion.paisOrigen}</p>
                                 <p><strong>Comisión de Marca:</strong> ${transaccion.comisionMarca?.toFixed(2) || "N/A"}</p>
